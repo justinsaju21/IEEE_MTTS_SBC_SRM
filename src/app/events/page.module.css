@@ -1,0 +1,135 @@
+.header {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.title {
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.subtitle {
+    color: var(--color-text-light);
+}
+
+.sectionBlock {
+    margin-bottom: 4rem;
+}
+
+.sectionTitle {
+    font-size: 1.75rem;
+    border-left: 5px solid var(--color-secondary);
+    padding-left: 1rem;
+    margin-bottom: 2rem;
+    color: var(--color-primary);
+}
+
+.list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.eventCard {
+    display: flex;
+    background: white;
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
+    overflow: hidden;
+    transition: box-shadow 0.2s ease;
+}
+
+.eventCard:hover {
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+}
+
+.dateBox {
+    background-color: var(--color-primary);
+    color: white;
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-width: 120px;
+    text-align: center;
+}
+
+.dateDay {
+    font-size: 1.5rem;
+    font-weight: 700;
+    line-height: 1;
+}
+
+.dateYear {
+    font-size: 0.9rem;
+    opacity: 0.9;
+}
+
+.eventContent {
+    padding: 1.5rem;
+    flex: 1;
+}
+
+.eventTitle {
+    margin-bottom: 0.5rem;
+    font-size: 1.25rem;
+}
+
+.eventMeta {
+    color: var(--color-secondary);
+    font-weight: 500;
+    margin-bottom: 0.75rem;
+    font-size: 0.9rem;
+}
+
+.eventDesc {
+    color: var(--color-text-light);
+    font-size: 0.95rem;
+}
+
+/* Past Events Grid */
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+}
+
+.pastEventCard {
+    background: #f8f9fa;
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
+    padding: 1.5rem;
+}
+
+.pastDate {
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--color-text-light);
+    display: block;
+    margin-bottom: 0.5rem;
+}
+
+.pastTitle {
+    font-size: 1.1rem;
+    margin-bottom: 0.5rem;
+}
+
+.pastDesc {
+    font-size: 0.9rem;
+    color: var(--color-text-light);
+}
+
+@media (max-width: 600px) {
+    .eventCard {
+        flex-direction: column;
+    }
+
+    .dateBox {
+        flex-direction: row;
+        gap: 0.5rem;
+        padding: 1rem;
+        justify-content: flex-start;
+    }
+}
