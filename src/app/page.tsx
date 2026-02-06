@@ -4,6 +4,14 @@ import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import styles from './page.module.css';
 import { FadeIn, StaggerContainer, StaggerItem, HeroText } from '@/components/Animations';
+import { Radio, Calendar, Users, ArrowRight, LucideIcon } from 'lucide-react';
+
+const getIcon = (title: string): LucideIcon => {
+  if (title.includes('About')) return Radio;
+  if (title.includes('Events')) return Calendar;
+  if (title.includes('Team')) return Users;
+  return ArrowRight;
+};
 
 // Fallback data if Sanity doesn't have content yet
 const fallbackData = {
@@ -17,9 +25,9 @@ const fallbackData = {
     { number: 'MTT-S', label: 'Technical Society' },
   ],
   quickLinks: [
-    { icon: '📡', title: 'About MTT-S', description: 'Learn about IEEE MTT-S and our chapter', link: '/about' },
-    { icon: '📅', title: 'Events', description: 'Upcoming workshops and technical talks', link: '/events' },
-    { icon: '👥', title: 'Our Team', description: 'Meet the office bearers', link: '/people' },
+    { icon: '', title: 'About MTT-S', description: 'Learn about IEEE MTT-S and our chapter', link: '/about' },
+    { icon: '', title: 'Events', description: 'Upcoming workshops and technical talks', link: '/events' },
+    { icon: '', title: 'Our Team', description: 'Meet the office bearers', link: '/people' },
   ],
   ctaTitle: 'Ready to Join?',
   ctaDescription: 'Become a part of the IEEE MTT-S community and unlock global opportunities in microwave engineering.',
@@ -117,15 +125,20 @@ export default function Home() {
             <h2 className={styles.sectionTitle}>Get Involved</h2>
           </FadeIn>
           <StaggerContainer className={styles.linksGrid} staggerDelay={0.15}>
-            {(quickLinks || fallbackData.quickLinks).map((item, index) => (
-              <StaggerItem key={index}>
-                <Link href={item.link} className={styles.linkCard}>
-                  <span className={styles.linkIcon}>{item.icon}</span>
-                  <h3>{item.title}</h3>
-                  <p>{item.description}</p>
-                </Link>
-              </StaggerItem>
-            ))}
+            {(quickLinks || fallbackData.quickLinks).map((item, index) => {
+              const Icon = getIcon(item.title);
+              return (
+                <StaggerItem key={index}>
+                  <Link href={item.link} className={styles.linkCard}>
+                    <span className={styles.linkIcon}>
+                      <Icon className="w-10 h-10 text-[#00A3E0]" />
+                    </span>
+                    <h3>{item.title}</h3>
+                    <p>{item.description}</p>
+                  </Link>
+                </StaggerItem>
+              );
+            })}
           </StaggerContainer>
         </div>
       </section>

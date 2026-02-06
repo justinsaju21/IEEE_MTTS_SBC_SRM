@@ -1,6 +1,7 @@
 import styles from './page.module.css';
 import { getOfficeBearers, urlFor } from '@/lib/sanity';
 import Image from 'next/image';
+import { FadeIn, StaggerContainer, StaggerItem } from '@/components/Animations';
 
 interface OfficeBearer {
     _id: string;
@@ -55,65 +56,91 @@ export default async function People() {
     const students = people.filter(p => p.type === "student");
 
     return (
-        <div className="container section">
-            <div className={styles.header}>
-                <h1 className={styles.title}>Office Bearers</h1>
-                <p className={styles.subtitle}>Meet the leadership team driving our chapter forward.</p>
+        <div className={styles.page}>
+            {/* Hero Section */}
+            <section className={styles.hero}>
+                <div className="container">
+                    <FadeIn>
+                        <h1 className={styles.title}>Office Bearers</h1>
+                        <p className={styles.subtitle}>Meet the leadership team driving our chapter forward.</p>
+                    </FadeIn>
+                </div>
+            </section>
+
+            <div className="container">
+                {/* Faculty Section */}
+                {faculty.length > 0 && (
+                    <section className={styles.group}>
+                        <FadeIn>
+                            <h2 className={styles.groupTitle}>Advisory Committee</h2>
+                        </FadeIn>
+                        <StaggerContainer className={styles.grid} staggerDelay={0.1}>
+                            {faculty.map((person) => (
+                                <StaggerItem key={person._id} className={styles.card}>
+                                    {person.photo ? (
+                                        <Image
+                                            src={urlFor(person.photo).width(150).height(150).url()}
+                                            alt={person.name}
+                                            width={150}
+                                            height={150}
+                                            className={styles.avatar}
+                                        />
+                                    ) : (
+                                        <div className={styles.avatarPlaceholder}>
+                                            {person.name.split(' ').map(n => n[0]).join('')}
+                                        </div>
+                                    )}
+                                    <h3 className={styles.name}>{person.name}</h3>
+                                    <p className={styles.role}>{person.role}</p>
+                                    <p className={styles.dept}>{person.department}</p>
+                                    {person.bio && <p className={styles.bio}>{person.bio}</p>}
+                                </StaggerItem>
+                            ))}
+                        </StaggerContainer>
+                    </section>
+                )}
+
+                {/* Student Section */}
+                {students.length > 0 && (
+                    <section className={styles.group}>
+                        <FadeIn>
+                            <h2 className={styles.groupTitle}>Executive Committee</h2>
+                        </FadeIn>
+                        <StaggerContainer className={styles.grid} staggerDelay={0.1}>
+                            {students.map((person) => (
+                                <StaggerItem key={person._id} className={styles.card}>
+                                    {person.photo ? (
+                                        <Image
+                                            src={urlFor(person.photo).width(150).height(150).url()}
+                                            alt={person.name}
+                                            width={150}
+                                            height={150}
+                                            className={styles.avatar}
+                                        />
+                                    ) : (
+                                        <div className={styles.avatarPlaceholder}>
+                                            {person.name.split(' ').map(n => n[0]).join('')}
+                                        </div>
+                                    )}
+                                    <h3 className={styles.name}>{person.name}</h3>
+                                    <p className={styles.role}>{person.role}</p>
+                                    <p className={styles.dept}>{person.department}</p>
+                                    {person.bio && <p className={styles.bio}>{person.bio}</p>}
+                                </StaggerItem>
+                            ))}
+                        </StaggerContainer>
+                    </section>
+                )}
+
+                {/* Empty State - No People at All */}
+                {faculty.length === 0 && students.length === 0 && (
+                    <FadeIn>
+                        <div className={styles.emptyState}>
+                            <p>Team information coming soon.</p>
+                        </div>
+                    </FadeIn>
+                )}
             </div>
-
-            <section className={styles.group}>
-                <h2 className={styles.groupTitle}>Advisory Committee</h2>
-                <div className={styles.grid}>
-                    {faculty.map((person) => (
-                        <div key={person._id} className={styles.card}>
-                            {person.photo ? (
-                                <Image
-                                    src={urlFor(person.photo).width(150).height(150).url()}
-                                    alt={person.name}
-                                    width={150}
-                                    height={150}
-                                    className={styles.avatar}
-                                />
-                            ) : (
-                                <div className={styles.avatarPlaceholder}>
-                                    {person.name.split(' ').map(n => n[0]).join('')}
-                                </div>
-                            )}
-                            <h3 className={styles.name}>{person.name}</h3>
-                            <p className={styles.role}>{person.role}</p>
-                            <p className={styles.dept}>{person.department}</p>
-                            {person.bio && <p className={styles.bio}>{person.bio}</p>}
-                        </div>
-                    ))}
-                </div>
-            </section>
-
-            <section className={styles.group}>
-                <h2 className={styles.groupTitle}>Executive Committee</h2>
-                <div className={styles.grid}>
-                    {students.map((person) => (
-                        <div key={person._id} className={styles.card}>
-                            {person.photo ? (
-                                <Image
-                                    src={urlFor(person.photo).width(150).height(150).url()}
-                                    alt={person.name}
-                                    width={150}
-                                    height={150}
-                                    className={styles.avatar}
-                                />
-                            ) : (
-                                <div className={styles.avatarPlaceholder}>
-                                    {person.name.split(' ').map(n => n[0]).join('')}
-                                </div>
-                            )}
-                            <h3 className={styles.name}>{person.name}</h3>
-                            <p className={styles.role}>{person.role}</p>
-                            <p className={styles.dept}>{person.department}</p>
-                            {person.bio && <p className={styles.bio}>{person.bio}</p>}
-                        </div>
-                    ))}
-                </div>
-            </section>
         </div>
     );
 }

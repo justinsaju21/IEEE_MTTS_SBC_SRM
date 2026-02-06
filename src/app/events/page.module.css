@@ -1,255 +1,188 @@
 .page {
-    padding: 4rem 0;
+    width: 100%;
+    background-color: #f8fafc;
 }
 
-.header {
+/* --- Hero Section --- */
+.hero {
+    position: relative;
+    background: #0f172a;
+    color: white;
+    padding: 8rem 0 5rem;
     text-align: center;
-    margin-bottom: 3.5rem;
+    overflow: hidden;
+}
+
+.hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+        linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+    background-size: 40px 40px;
+    mask-image: radial-gradient(circle at center, black 40%, transparent 100%);
+    pointer-events: none;
+}
+
+.hero::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 800px;
+    height: 800px;
+    background: radial-gradient(circle, rgba(0, 163, 224, 0.15) 0%, transparent 70%);
+    filter: blur(60px);
+    pointer-events: none;
 }
 
 .title {
-    font-size: clamp(2rem, 5vw, 2.75rem);
-    margin-bottom: 0.75rem;
-    color: #002855;
-    letter-spacing: -0.02em;
+    position: relative;
+    font-size: clamp(2.5rem, 5vw, 3.5rem);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    margin-bottom: 1rem;
+    background: linear-gradient(135deg, #ffffff 0%, #94a3b8 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 
 .subtitle {
-    color: #64748b;
+    position: relative;
+    font-size: 1.15rem;
+    color: #94a3b8;
     max-width: 600px;
     margin: 0 auto;
-    font-size: 1.05rem;
     line-height: 1.6;
 }
 
-.sectionBlock {
-    margin-bottom: 4.5rem;
+/* --- Event Section --- */
+.eventSection {
+    padding: 3rem 0;
 }
 
 .sectionTitle {
-    font-size: 1.35rem;
-    padding-left: 1rem;
-    margin-bottom: 2rem;
-    color: #002855;
-    position: relative;
+    font-size: 1.5rem;
     font-weight: 700;
+    color: #0f172a;
+    margin-bottom: 2rem;
+    padding-left: 1rem;
+    border-left: 4px solid #00A3E0;
 }
 
-.sectionTitle::before {
-    content: '';
-    position: absolute;
-    left: 0;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 4px;
-    height: 100%;
-    background: linear-gradient(180deg, #00A3E0 0%, #002855 100%);
-    border-radius: 2px;
-}
-
-.list {
-    display: flex;
-    flex-direction: column;
-    gap: 1.75rem;
+/* --- Event Grid --- */
+.eventGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 2rem;
 }
 
 .eventCard {
-    display: flex;
     background: white;
-    border: 1px solid #e2e8f0;
-    border-radius: 16px;
+    border-radius: 24px;
     overflow: hidden;
+    border: 1px solid #e2e8f0;
     transition: all 0.4s cubic-bezier(0.25, 0.1, 0.25, 1);
 }
 
 .eventCard:hover {
-    box-shadow: 0 16px 40px rgba(0, 40, 85, 0.1);
-    border-color: transparent;
-    transform: translateY(-4px);
+    transform: translateY(-8px);
+    box-shadow: 0 20px 40px rgba(0, 40, 85, 0.1);
+    border-color: rgba(0, 163, 224, 0.3);
 }
 
-.dateBox {
-    background: linear-gradient(135deg, #002855 0%, #001a3a 100%);
-    color: white;
-    padding: 2rem 2.5rem;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    min-width: 130px;
-    text-align: center;
-}
-
-.dateDay {
-    font-size: 2.25rem;
-    font-weight: 800;
-    line-height: 1;
-}
-
-.dateYear {
-    font-size: 0.9rem;
+.pastEvent {
     opacity: 0.85;
-    margin-top: 0.5rem;
-    font-weight: 500;
+}
+
+.eventImage {
+    position: relative;
+    width: 100%;
+    height: 200px;
+    overflow: hidden;
+}
+
+.eventImage img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }
 
 .eventContent {
-    padding: 2rem 2.5rem;
-    flex: 1;
+    padding: 2rem;
+}
+
+.eventDate {
+    display: inline-block;
+    background: rgba(0, 163, 224, 0.1);
+    color: #00A3E0;
+    padding: 0.5rem 1rem;
+    border-radius: 50px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
 }
 
 .eventTitle {
     font-size: 1.35rem;
-    margin-bottom: 0.5rem;
-    color: #002855;
     font-weight: 700;
+    color: #0f172a;
+    margin-bottom: 0.75rem;
 }
 
-.eventMeta {
-    color: #00A3E0;
+.eventVenue {
+    font-size: 0.9rem;
+    color: #64748b;
+    margin-bottom: 1rem;
+}
+
+.eventDescription {
+    font-size: 0.95rem;
+    color: #64748b;
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+}
+
+.registerBtn {
+    display: inline-flex;
+    padding: 0.75rem 1.5rem;
+    background: #00A3E0;
+    color: white;
+    border-radius: 50px;
     font-weight: 600;
-    margin-bottom: 0.875rem;
-    font-size: 0.95rem;
+    font-size: 0.9rem;
+    text-decoration: none;
+    transition: all 0.3s ease;
 }
 
-.eventDesc {
-    color: #475569;
-    font-size: 0.95rem;
-    line-height: 1.7;
+.registerBtn:hover {
+    background: #0090c7;
+    transform: translateY(-2px);
 }
 
 /* Empty State */
 .emptyState {
-    background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+    background: white;
     border: 2px dashed #cbd5e1;
-    border-radius: 16px;
+    border-radius: 24px;
     padding: 4rem 2rem;
     text-align: center;
-}
-
-.emptyNote {
     color: #64748b;
-    font-size: 0.95rem;
-    margin-top: 0.75rem;
 }
 
-/* Past Events Grid */
-.grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
-    gap: 2rem;
-}
-
-.pastEventCard {
-    background: white;
-    border: 1px solid #e2e8f0;
-    border-radius: 16px;
-    padding: 2.25rem;
-    transition: all 0.4s cubic-bezier(0.25, 0.1, 0.25, 1);
-    position: relative;
-    overflow: hidden;
-}
-
-.pastEventCard::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 3px;
-    background: linear-gradient(90deg, #00A3E0 0%, #002855 100%);
-    transform: scaleX(0);
-    transform-origin: left;
-    transition: transform 0.4s ease;
-}
-
-.pastEventCard:hover {
-    box-shadow: 0 16px 40px rgba(0, 40, 85, 0.1);
-    transform: translateY(-6px);
-    border-color: transparent;
-}
-
-.pastEventCard:hover::before {
-    transform: scaleX(1);
-}
-
-.pastDate {
-    display: inline-block;
-    background: linear-gradient(135deg, #002855 0%, #001a3a 100%);
-    color: white;
-    padding: 0.375rem 1rem;
-    border-radius: 6px;
-    font-size: 0.8rem;
-    font-weight: 600;
-    margin-bottom: 1.25rem;
-}
-
-.pastTitle {
-    font-size: 1.25rem;
-    margin-bottom: 0.5rem;
-    color: #002855;
-    font-weight: 700;
-}
-
-.pastVenue {
-    color: #00A3E0;
-    font-size: 0.95rem;
-    margin-bottom: 0.875rem;
-    font-weight: 500;
-}
-
-.pastDesc {
-    font-size: 0.95rem;
-    color: #475569;
-    line-height: 1.7;
-}
-
-/* Info Block */
-.infoBlock {
-    background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
-    border: 1px solid #bae6fd;
-    border-radius: 16px;
-    padding: 2.5rem;
-    text-align: center;
-}
-
-.infoBlock h3 {
-    color: #002855;
-    margin-bottom: 0.75rem;
-    font-size: 1.25rem;
-}
-
-.infoBlock p {
-    color: #475569;
-    font-size: 1rem;
-    line-height: 1.6;
-}
-
-@media (max-width: 600px) {
-    .page {
-        padding: 2.5rem 0;
+/* Responsive */
+@media (max-width: 768px) {
+    .hero {
+        padding: 6rem 0 4rem;
     }
 
-    .eventCard {
-        flex-direction: column;
+    .title {
+        font-size: 2rem;
     }
 
-    .dateBox {
-        flex-direction: row;
-        gap: 0.75rem;
-        padding: 1.25rem;
-        justify-content: center;
-    }
-
-    .dateDay {
-        font-size: 1.75rem;
-    }
-
-    .eventContent {
-        padding: 1.75rem;
-    }
-
-    .grid {
+    .eventGrid {
         grid-template-columns: 1fr;
     }
 }

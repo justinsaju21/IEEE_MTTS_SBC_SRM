@@ -1,51 +1,152 @@
 .page {
-    padding: 4rem 0;
+    width: 100%;
+    background-color: #f8fafc;
 }
 
-.header {
+/* --- Hero Section --- */
+.hero {
+    position: relative;
+    background: #0f172a;
+    color: white;
+    padding: 8rem 0 5rem;
     text-align: center;
-    margin-bottom: 3.5rem;
+    overflow: hidden;
+}
+
+.hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+        linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+    background-size: 40px 40px;
+    mask-image: radial-gradient(circle at center, black 40%, transparent 100%);
+    pointer-events: none;
+}
+
+.hero::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 800px;
+    height: 800px;
+    background: radial-gradient(circle, rgba(0, 163, 224, 0.15) 0%, transparent 70%);
+    filter: blur(60px);
+    pointer-events: none;
 }
 
 .title {
-    font-size: clamp(2rem, 5vw, 2.75rem);
-    margin-bottom: 0.75rem;
-    color: #002855;
-    letter-spacing: -0.02em;
+    position: relative;
+    font-size: clamp(2.5rem, 5vw, 3.5rem);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    margin-bottom: 1rem;
+    background: linear-gradient(135deg, #ffffff 0%, #94a3b8 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 
 .subtitle {
-    color: #64748b;
-    font-size: 1.1rem;
+    position: relative;
+    font-size: 1.15rem;
+    color: #94a3b8;
+    max-width: 600px;
+    margin: 0 auto;
+    line-height: 1.6;
 }
 
-.emptyGallery {
-    background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
-    border: 2px dashed #cbd5e1;
+/* --- Gallery Grid --- */
+.galleryGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.5rem;
+    padding: 3rem 0;
+}
+
+.galleryItem {
+    position: relative;
     border-radius: 20px;
+    overflow: hidden;
+    aspect-ratio: 4 / 3;
+    cursor: pointer;
+}
+
+.galleryImage {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.galleryItem:hover .galleryImage {
+    transform: scale(1.1);
+}
+
+.imageOverlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(15, 23, 42, 0.9) 0%, transparent 60%);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 1.5rem;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.galleryItem:hover .imageOverlay {
+    opacity: 1;
+}
+
+.caption {
+    color: white;
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.eventTag {
+    display: inline-block;
+    background: #00A3E0;
+    color: white;
+    padding: 0.35rem 0.75rem;
+    border-radius: 50px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    width: fit-content;
+}
+
+/* --- Empty State --- */
+.emptyGallery {
+    background: white;
+    border-radius: 24px;
     padding: 5rem 2rem;
     text-align: center;
-    margin-bottom: 2.5rem;
+    border: 1px solid #e2e8f0;
+    margin: 3rem 0;
 }
 
 .emptyIcon {
-    font-size: 4.5rem;
-    margin-bottom: 1.75rem;
-    display: block;
+    font-size: 4rem;
+    margin-bottom: 1.5rem;
+    filter: grayscale(1);
+    opacity: 0.5;
 }
 
 .emptyGallery h2 {
-    color: #002855;
-    margin-bottom: 1rem;
-    font-size: 1.5rem;
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: #0f172a;
+    margin-bottom: 0.75rem;
 }
 
 .emptyGallery p {
     color: #64748b;
-    max-width: 450px;
-    margin: 0 auto 2.5rem;
-    line-height: 1.7;
     font-size: 1rem;
+    margin-bottom: 2rem;
 }
 
 .categories {
@@ -56,108 +157,25 @@
 }
 
 .tag {
-    background: white;
-    border: 1px solid #e2e8f0;
-    padding: 0.5rem 1.25rem;
+    padding: 0.5rem 1rem;
     border-radius: 50px;
-    font-size: 0.85rem;
-    color: #334155;
-    font-weight: 500;
-    transition: all 0.3s ease;
-}
-
-.tag:hover {
-    border-color: #00A3E0;
-    color: #00A3E0;
-    transform: translateY(-2px);
-}
-
-.infoBlock {
-    background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
-    border: 1px solid #bae6fd;
-    border-radius: 16px;
-    padding: 2rem 2.5rem;
-    text-align: center;
-}
-
-.infoBlock h3 {
-    color: #002855;
-    margin-bottom: 0.75rem;
-    font-size: 1.15rem;
-}
-
-.infoBlock p {
+    background: #f1f5f9;
     color: #475569;
-    font-size: 0.95rem;
-    margin: 0;
-    line-height: 1.6;
+    font-weight: 600;
+    font-size: 0.85rem;
 }
 
-/* Grid for future use */
-.grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-    gap: 1.75rem;
-}
-
-.galleryItem {
-    position: relative;
-    border-radius: 16px;
-    overflow: hidden;
-    aspect-ratio: 4/3;
-    cursor: pointer;
-    box-shadow: 0 4px 12px rgba(0, 40, 85, 0.08);
-    transition: all 0.4s cubic-bezier(0.25, 0.1, 0.25, 1);
-}
-
-.galleryItem:hover {
-    transform: translateY(-6px);
-    box-shadow: 0 16px 40px rgba(0, 40, 85, 0.15);
-}
-
-.image {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 0.5s cubic-bezier(0.25, 0.1, 0.25, 1);
-}
-
-.galleryItem:hover .image {
-    transform: scale(1.08);
-}
-
-.caption {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background: linear-gradient(transparent 0%, rgba(0, 20, 40, 0.85) 100%);
-    color: white;
-    padding: 3rem 1.25rem 1.25rem;
-    font-size: 0.9rem;
-    font-weight: 500;
-    transform: translateY(100%);
-    transition: transform 0.4s ease;
-}
-
-.galleryItem:hover .caption {
-    transform: translateY(0);
-}
-
+/* Responsive */
 @media (max-width: 768px) {
-    .page {
-        padding: 2.5rem 0;
+    .hero {
+        padding: 6rem 0 4rem;
     }
 
     .title {
-        font-size: 1.75rem;
+        font-size: 2rem;
     }
 
-    .emptyGallery {
-        padding: 3rem 1.5rem;
-    }
-
-    .grid {
-        grid-template-columns: 1fr;
+    .galleryGrid {
+        grid-template-columns: 1fr 1fr;
     }
 }

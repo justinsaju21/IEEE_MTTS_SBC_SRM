@@ -1,5 +1,10 @@
 import styles from './page.module.css';
 import { getAboutPage } from '@/lib/sanity';
+import { FadeIn, StaggerContainer, StaggerItem } from '@/components/Animations';
+import {
+    Globe, BookOpen, GraduationCap, Handshake, LucideIcon, Target, Lightbulb,
+    Zap, Radio, Wifi, Cpu, Layers
+} from 'lucide-react';
 
 interface AboutPageData {
     heroTitle: string;
@@ -17,37 +22,39 @@ interface AboutPageData {
 
 const fallbackData: AboutPageData = {
     heroTitle: 'About Us',
-    heroSubtitle: 'IEEE Microwave Theory and Technology Society Student Branch Chapter',
-    aboutIEEE: 'The Institute of Electrical and Electronics Engineers (IEEE) is the world\'s largest technical professional organization dedicated to advancing technology for the benefit of humanity.',
-    aboutMTTS: 'The IEEE Microwave Theory and Technology Society (MTT-S) is a leading global society focused on the advancement of microwave engineering, RF technologies, millimeter-wave systems, and antennas.',
-    parentOrganizations: [
-        'IEEE (Institute of Electrical and Electronics Engineers)',
-        'IEEE Microwave Theory and Technology Society (MTT-S)',
-        'IEEE SRM Student Branch',
-        'IEEE Madras Section'
-    ],
-    aboutChapter: 'The IEEE MTT-S Student Branch Chapter at SRM Institute of Science and Technology was established to cultivate technical expertise, research orientation, innovation, and professional development among students.',
-    vision: 'To become a leading IEEE student chapter recognized for technical excellence, impactful activities, industry engagement, and contributions to the advancement of high-frequency technologies.',
-    mission: 'To empower students with technical knowledge, research opportunities, and professional skills in microwave and RF engineering while fostering innovation and collaboration.',
+    heroSubtitle: 'Innovating at the intersection of electromagnetic waves and future technology.',
+    aboutIEEE: 'IEEE is the world\'s largest technical professional organization dedicated to advancing technology for the benefit of humanity.',
+    aboutMTTS: 'The IEEE Microwave Theory and Technology Society (MTT-S) promotes the advancement of microwave theory and its applications, including RF, microwave, millimeter-wave tech, and autonomous systems.',
+    parentOrganizations: ['IEEE', 'IEEE MTT-S', 'IEEE SRM Branch', 'IEEE Madras'],
+    aboutChapter: 'Our Student Branch Chapter at SRM IST is a vibrant community of innovators. We bridge the gap between academic theory and industry reality through hands-on workshops, expert talks, and cutting-edge research projects.',
+    vision: 'To be a premier hub of microwave innovation, fostering technical excellence and professional growth.',
+    mission: 'Empowering students to master RF & Microwave technologies through research, collaboration, and industry exposure.',
     objectives: [
-        'Promote learning in RF, microwave, and antenna technologies',
-        'Encourage student research and publications',
-        'Provide exposure to emerging technologies such as 5G/6G, radar, IoT',
-        'Facilitate interaction with industry professionals',
-        'Organize technical workshops and seminars',
-        'Develop leadership and teamwork skills'
+        'Advanced RF/Microwave Learning',
+        'Research & Publications',
+        'Industry & Alumni Interaction',
+        'Hands-on Prototyping',
+        'Leadership Development'
     ],
     focusAreas: [
-        'Microwave Engineering', 'RF Systems', 'Antenna Design', 'Millimeter-Wave Technologies',
-        'Wireless Communication', 'Radar Systems', 'Satellite Communication', 'Electromagnetics',
-        'Biomedical RF Applications', 'Wireless Power Transfer'
+        'Microwave Engineering', '5G/6G Networks', 'Antenna Design', 'Radar Systems',
+        'Satellite Comms', 'IoT Connectivity', 'Radio Astronomy', 'Bio-Medical RF',
+        'Wireless Power', 'Electromagnetics'
     ],
     memberBenefits: [
-        { icon: '🌐', title: 'Global Network', description: 'Access to IEEE\'s worldwide community of engineers and researchers.' },
-        { icon: '📚', title: 'Technical Resources', description: 'IEEE Xplore, journals, conferences, and educational materials.' },
-        { icon: '🎓', title: 'Professional Development', description: 'Workshops, certifications, and leadership opportunities.' },
-        { icon: '🤝', title: 'Industry Connections', description: 'Networking with professionals and potential employers.' }
+        { icon: 'Globe', title: 'Global Network', description: 'Connect with 400,000+ members worldwide.' },
+        { icon: 'BookOpen', title: 'Resources', description: 'Access IEEE Xplore & cutting-edge journals.' },
+        { icon: 'GraduationCap', title: 'Career Growth', description: 'Scholarships, grants, and job portals.' },
+        { icon: 'Handshake', title: 'Community', description: 'Mentorship from industry veterans.' }
     ]
+};
+
+const getBenefitIcon = (title: string): LucideIcon => {
+    if (title.includes('Global')) return Globe;
+    if (title.includes('Resources')) return BookOpen;
+    if (title.includes('Career')) return GraduationCap;
+    if (title.includes('Community')) return Handshake;
+    return Globe;
 };
 
 export const metadata = {
@@ -58,81 +65,114 @@ export default async function About() {
     const data = await getAboutPage() || fallbackData;
     const content = { ...fallbackData, ...data };
 
+    // Ensure arrays are valid (defensive check for Sanity data)
+    const focusAreas = Array.isArray(content.focusAreas) && content.focusAreas.length > 0
+        ? content.focusAreas
+        : fallbackData.focusAreas;
+    const memberBenefits = Array.isArray(content.memberBenefits) && content.memberBenefits.length > 0
+        ? content.memberBenefits
+        : fallbackData.memberBenefits;
+
     return (
         <div className={styles.page}>
+            {/* Hero Section */}
             <section className={styles.hero}>
                 <div className="container">
-                    <h1 className={styles.heroTitle}>{content.heroTitle}</h1>
-                    <p className={styles.heroSubtitle}>{content.heroSubtitle}</p>
+                    <FadeIn>
+                        <h1 className={styles.heroTitle}>{content.heroTitle}</h1>
+                        <p className={styles.heroSubtitle}>{content.heroSubtitle}</p>
+                    </FadeIn>
                 </div>
             </section>
 
-            <div className="container section">
-                <section className={styles.contentSection}>
-                    <h2 className={styles.sectionTitle}>About IEEE</h2>
-                    <p>{content.aboutIEEE}</p>
-                </section>
+            <div className="container" style={{ paddingBottom: '4rem' }}>
 
-                <section className={styles.contentSection}>
-                    <h2 className={styles.sectionTitle}>About IEEE MTT-S</h2>
-                    <p>{content.aboutMTTS}</p>
-                </section>
-
-                <section className={styles.contentSection}>
-                    <h2 className={styles.sectionTitle}>Parent Organizations</h2>
-                    <div className={styles.orgList}>
-                        {content.parentOrganizations.map((org: string, index: number) => (
-                            <div key={index} className={styles.orgItem}>{org}</div>
-                        ))}
-                    </div>
-                </section>
-
-                <section className={styles.contentSection}>
-                    <h2 className={styles.sectionTitle}>Our Student Chapter</h2>
-                    <p>{content.aboutChapter}</p>
-                </section>
-
-                <section className={styles.vmSection}>
-                    <div className={styles.vmCard}>
-                        <h3>Vision</h3>
-                        <p>{content.vision}</p>
-                    </div>
-                    <div className={styles.vmCard}>
-                        <h3>Mission</h3>
-                        <p>{content.mission}</p>
-                    </div>
-                </section>
-
-                <section className={styles.contentSection}>
-                    <h2 className={styles.sectionTitle}>Core Objectives</h2>
-                    <ul className={styles.objectivesList}>
-                        {content.objectives.map((obj: string, index: number) => (
-                            <li key={index}>{obj}</li>
-                        ))}
-                    </ul>
-                </section>
-
-                <section className={styles.contentSection}>
-                    <h2 className={styles.sectionTitle}>Key Focus Areas</h2>
-                    <div className={styles.focusGrid}>
-                        {content.focusAreas.map((area: string, index: number) => (
-                            <div key={index} className={styles.focusItem}>{area}</div>
-                        ))}
-                    </div>
-                </section>
-
-                <section className={styles.benefitsSection}>
-                    <h2 className={styles.sectionTitle}>Why Join IEEE MTT-S?</h2>
-                    <div className={styles.benefitsGrid}>
-                        {content.memberBenefits.map((benefit: { icon: string; title: string; description: string }, index: number) => (
-                            <div key={index} className={styles.benefitCard}>
-                                <span className={styles.benefitIcon}>{benefit.icon}</span>
-                                <h3>{benefit.title}</h3>
-                                <p>{benefit.description}</p>
+                {/* Bento Grid: Who We Are */}
+                <FadeIn className={styles.bentoGridSection}>
+                    <div className={styles.bentoGrid}>
+                        {/* Main Card: Our Chapter */}
+                        <div className={`${styles.bentoCard} ${styles.cardMain}`}>
+                            <div className={styles.cardIcon}>
+                                <Cpu size={32} />
                             </div>
-                        ))}
+                            <h2 className={styles.cardTitle}>Our Chapter</h2>
+                            <p className={styles.cardText}>{content.aboutChapter}</p>
+                        </div>
+
+                        {/* Right Column */}
+                        <div className={styles.sideCol}>
+                            {/* Side Card 1: IEEE */}
+                            <div className={`${styles.bentoCard} ${styles.cardSmall}`}>
+                                <div className={styles.cardIcon}>
+                                    <Globe size={24} />
+                                </div>
+                                <h3 className={styles.cardTitle}>IEEE</h3>
+                                <p className={styles.cardText}>{content.aboutIEEE}</p>
+                            </div>
+
+                            {/* Side Card 2: MTT-S */}
+                            <div className={`${styles.bentoCard} ${styles.cardSmall}`}>
+                                <div className={styles.cardIcon}>
+                                    <Radio size={24} />
+                                </div>
+                                <h3 className={styles.cardTitle}>MTT-S</h3>
+                                <p className={styles.cardText}>{content.aboutMTTS}</p>
+                            </div>
+                        </div>
                     </div>
+                </FadeIn>
+
+                {/* Vision / Mission Split */}
+                <FadeIn delay={0.2}>
+                    <div className={styles.visionMissionGrid}>
+                        <div className={`${styles.vmPanel} ${styles.vmDark}`}>
+                            <Lightbulb className={styles.vmWatermark} size={200} strokeWidth={1} />
+                            <h3 className={styles.vmTitle}>Vision</h3>
+                            <p className={styles.vmText}>{content.vision}</p>
+                        </div>
+                        <div className={`${styles.vmPanel} ${styles.vmLight}`}>
+                            <Target className={styles.vmWatermark} size={200} strokeWidth={1} />
+                            <h3 className={styles.vmTitle}>Mission</h3>
+                            <p className={styles.vmText}>{content.mission}</p>
+                        </div>
+                    </div>
+                </FadeIn>
+
+                {/* Focus Areas Cloud */}
+                <section className={styles.focusSection}>
+                    <FadeIn>
+                        <h2 className={styles.sectionTitle}>What We Explore</h2>
+                    </FadeIn>
+                    <StaggerContainer className={styles.focusCloud} staggerDelay={0.05}>
+                        {focusAreas.map((area: string, index: number) => (
+                            <StaggerItem key={index}>
+                                <div className={styles.focusTag}>{area}</div>
+                            </StaggerItem>
+                        ))}
+                    </StaggerContainer>
                 </section>
+
+                {/* Benefits Section */}
+                <section style={{ marginTop: '4rem' }}>
+                    <FadeIn>
+                        <h2 className={styles.sectionTitle}>Why Join Us?</h2>
+                    </FadeIn>
+                    <StaggerContainer className={styles.benefitsGrid} staggerDelay={0.1}>
+                        {memberBenefits.map((benefit: { icon: string; title: string; description: string }, index: number) => {
+                            const Icon = getBenefitIcon(benefit.title);
+                            return (
+                                <StaggerItem key={index} className={styles.benefitCard}>
+                                    <div className={styles.benefitHeader}>
+                                        <Icon className="text-[#00A3E0]" size={32} />
+                                        <h3 className={styles.benefitTitle}>{benefit.title}</h3>
+                                    </div>
+                                    <p className={styles.benefitDescription}>{benefit.description}</p>
+                                </StaggerItem>
+                            );
+                        })}
+                    </StaggerContainer>
+                </section>
+
             </div>
         </div>
     );

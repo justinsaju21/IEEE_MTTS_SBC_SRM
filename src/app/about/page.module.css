@@ -1,276 +1,327 @@
 .page {
     width: 100%;
+    background-color: #f8fafc;
 }
 
-/* Hero */
+/* --- Hero Section with Pattern --- */
 .hero {
     position: relative;
-    background: linear-gradient(135deg, #002855 0%, #001a3a 50%, #00294d 100%);
+    background: #0f172a;
     color: white;
-    padding: 5rem 0 4rem;
+    padding: 8rem 0 5rem;
     text-align: center;
     overflow: hidden;
 }
 
+/* Abstract Grid Background */
 .hero::before {
     content: '';
     position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: radial-gradient(circle at 30% 70%, rgba(0, 163, 224, 0.15) 0%, transparent 50%);
+    inset: 0;
+    background-image:
+        linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+    background-size: 40px 40px;
+    mask-image: radial-gradient(circle at center, black 40%, transparent 100%);
+    pointer-events: none;
+}
+
+/* Glowing Orb Effect */
+.hero::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 800px;
+    height: 800px;
+    background: radial-gradient(circle, rgba(0, 163, 224, 0.15) 0%, transparent 70%);
+    filter: blur(60px);
     pointer-events: none;
 }
 
 .heroTitle {
     position: relative;
-    color: white;
-    font-size: clamp(2rem, 5vw, 3rem);
-    margin-bottom: 0.75rem;
+    font-size: clamp(2.5rem, 5vw, 3.5rem);
     font-weight: 800;
-    letter-spacing: -0.02em;
+    letter-spacing: -0.03em;
+    margin-bottom: 1rem;
+    background: linear-gradient(135deg, #ffffff 0%, #94a3b8 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 
 .heroSubtitle {
     position: relative;
-    font-size: 1.1rem;
-    color: rgba(255, 255, 255, 0.85);
+    font-size: 1.15rem;
+    color: #94a3b8;
     max-width: 600px;
     margin: 0 auto;
     line-height: 1.6;
 }
 
-/* Content Sections */
-.content {
-    padding: 4rem 0;
-}
-
-.contentSection {
-    margin-bottom: 3.5rem;
-}
-
+/* --- Section Title (Global) --- */
 .sectionTitle {
-    font-size: 1.35rem;
-    color: #002855;
-    padding-left: 1rem;
-    margin-bottom: 1.5rem;
-    position: relative;
+    font-size: 1.75rem;
     font-weight: 700;
+    color: #0f172a;
+    margin-bottom: 2rem;
+    text-align: center;
 }
 
-.sectionTitle::before {
-    content: '';
-    position: absolute;
-    left: 0;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 4px;
-    height: 100%;
-    background: linear-gradient(180deg, #00A3E0 0%, #002855 100%);
-    border-radius: 2px;
+/* --- Bento Grid Layout --- */
+.bentoGridSection {
+    padding: 4rem 0 2rem;
 }
 
-.contentSection p {
-    margin-bottom: 1rem;
-    line-height: 1.8;
-    color: #475569;
+/* The Grid Container */
+.bentoGrid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+@media (min-width: 1024px) {
+    .bentoGrid {
+        display: flex;
+        gap: 1.5rem;
+        align-items: flex-start;
+        /* Prevent forced stretching if content doesn't match */
+    }
+
+    .cardMain {
+        flex: 1.3;
+    }
+
+    .sideCol {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+    }
+}
+
+/* Common Card Styles */
+.bentoCard {
+    background: white;
+    border-radius: 24px;
+    padding: 2rem;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+    border: 1px solid rgba(226, 232, 240, 0.6);
+    transition: all 0.4s cubic-bezier(0.25, 0.1, 0.25, 1);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    position: relative;
+    overflow: hidden;
+}
+
+.bentoCard:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 20px 40px -5px rgba(0, 40, 85, 0.1);
+    border-color: rgba(0, 163, 224, 0.3);
+}
+
+/* Card Variants (Grid Placement) */
+.cardMain {
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+    color: white;
+}
+
+@media (min-width: 1024px) {
+    .cardMain {
+        grid-row: 1 / 3;
+        /* Span both rows */
+    }
+}
+
+.cardSmall {
+    /* Auto-placed in the second column */
+}
+
+@media (min-width: 1024px) {
+    /* No specific grid-column or grid-row needed for cardSmall,
+       as it will auto-place in the remaining grid cells. */
+}
+
+.cardTitle {
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+    color: #0f172a;
+}
+
+.cardMain .cardTitle {
+    color: white;
+    font-size: 1.5rem;
+}
+
+.cardText {
+    color: #64748b;
+    line-height: 1.7;
+    font-size: 0.95rem;
+    margin: 0;
+}
+
+.cardMain .cardText {
+    color: #cbd5e1;
     font-size: 1rem;
 }
 
-/* Parent Organizations */
-.orgList {
+/* Decorative Card Elements */
+.cardIcon {
+    margin-bottom: 1rem;
+    padding: 10px;
+    background: rgba(0, 163, 224, 0.1);
+    color: #00A3E0;
+    border-radius: 12px;
+    width: fit-content;
+}
+
+.cardMain .cardIcon {
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+}
+
+/* --- Vision & Mission (Split Layout) --- */
+.visionMissionGrid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    max-width: 1000px;
+    margin: 2rem auto 3rem;
+    border-radius: 24px;
+    overflow: hidden;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+}
+
+.vmPanel {
+    padding: 3rem;
     display: flex;
     flex-direction: column;
-    gap: 0.75rem;
-}
-
-.orgItem {
-    background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
-    padding: 1.25rem 1.5rem;
-    border-radius: 12px;
-    border-left: 4px solid #00A3E0;
-    font-weight: 600;
-    color: #002855;
-    transition: all 0.3s ease;
-}
-
-.orgItem:hover {
-    transform: translateX(6px);
-    box-shadow: 0 4px 12px rgba(0, 40, 85, 0.08);
-}
-
-/* Vision & Mission */
-.vmSection {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-    gap: 2rem;
-    margin-bottom: 3.5rem;
-}
-
-.vmCard {
+    justify-content: center;
     position: relative;
-    background: linear-gradient(135deg, #002855 0%, #001a3a 100%);
-    color: white;
-    padding: 2.5rem;
-    border-radius: 16px;
     overflow: hidden;
-    transition: all 0.4s cubic-bezier(0.25, 0.1, 0.25, 1);
 }
 
-.vmCard::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 4px;
-    background: linear-gradient(90deg, #00A3E0 0%, #00c9ff 100%);
+.vmDark {
+    background: #0f172a;
+    color: white;
 }
 
-.vmCard:hover {
-    transform: translateY(-6px);
-    box-shadow: 0 20px 40px rgba(0, 40, 85, 0.25);
+.vmLight {
+    background: #00A3E0;
+    color: white;
 }
 
-.vmCard h3 {
-    color: #00A3E0;
+.vmTitle {
+    font-size: 1.5rem;
+    font-weight: 800;
     margin-bottom: 1rem;
-    font-size: 1.25rem;
-    font-weight: 700;
-}
-
-.vmCard p {
-    color: rgba(255, 255, 255, 0.9);
-    line-height: 1.7;
-    font-size: 0.95rem;
-}
-
-/* Objectives */
-.objectivesList {
-    list-style: none;
-    padding: 0;
-    display: grid;
-    gap: 0.875rem;
-}
-
-.objectivesList li {
     position: relative;
-    padding-left: 2rem;
+    z-index: 10;
+}
+
+.vmText {
+    font-size: 1rem;
     line-height: 1.6;
-    color: #334155;
+    opacity: 0.9;
+    position: relative;
+    z-index: 10;
+    margin: 0;
 }
 
-.objectivesList li::before {
-    content: '→';
+.vmWatermark {
     position: absolute;
-    left: 0;
-    color: #00A3E0;
-    font-weight: 700;
-    font-size: 1.1rem;
+    bottom: -20px;
+    right: -20px;
+    opacity: 0.1;
+    transform: rotate(-15deg);
 }
 
-/* Focus Areas */
-.focusGrid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-    gap: 1rem;
-}
-
-.focusItem {
+/* --- Tech Cloud (Focus Areas) --- */
+.focusSection {
+    padding: 3rem 1rem;
     background: white;
-    padding: 1.25rem 1.5rem;
-    border-radius: 12px;
-    text-align: center;
-    border: 1px solid #e2e8f0;
+    border-top: 1px solid #e2e8f0;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.focusCloud {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.75rem;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.focusTag {
+    padding: 0.6rem 1.25rem;
+    border-radius: 50px;
+    background: #f1f5f9;
+    color: #475569;
     font-weight: 600;
     font-size: 0.9rem;
-    color: #002855;
-    transition: all 0.3s cubic-bezier(0.25, 0.1, 0.25, 1);
+    transition: all 0.3s ease;
     cursor: default;
+    border: 1px solid transparent;
 }
 
-.focusItem:hover {
-    border-color: #00A3E0;
-    background: linear-gradient(135deg, rgba(0, 163, 224, 0.05) 0%, rgba(0, 40, 85, 0.02) 100%);
-    transform: translateY(-4px);
-    box-shadow: 0 8px 20px rgba(0, 163, 224, 0.15);
+.focusTag:hover {
+    background: #00A3E0;
+    color: white;
+    transform: scale(1.05);
+    box-shadow: 0 4px 12px rgba(0, 163, 224, 0.3);
 }
 
-/* Member Benefits */
+/* --- Benefits (Modern Grid) --- */
 .benefitsSection {
-    background: linear-gradient(180deg, #f8fafc 0%, #f1f5f9 100%);
-    margin: 0 -1.5rem 0;
-    padding: 4rem 1.5rem;
-}
-
-.benefitsSection .sectionTitle {
-    text-align: center;
-    padding-left: 0;
-}
-
-.benefitsSection .sectionTitle::before {
-    display: none;
+    padding: 3rem 0 4rem;
 }
 
 .benefitsGrid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
     gap: 1.5rem;
-    margin-top: 2.5rem;
-    max-width: 1100px;
+    margin-top: 2rem;
+    max-width: 1000px;
     margin-left: auto;
     margin-right: auto;
 }
 
 .benefitCard {
     background: white;
-    padding: 2.25rem;
-    border-radius: 16px;
+    padding: 1.75rem;
+    border-radius: 20px;
     border: 1px solid #e2e8f0;
-    text-align: center;
-    transition: all 0.4s cubic-bezier(0.25, 0.1, 0.25, 1);
-    position: relative;
-    overflow: hidden;
-}
-
-.benefitCard::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 3px;
-    background: linear-gradient(90deg, #00A3E0 0%, #002855 100%);
-    transform: scaleX(0);
-    transform-origin: left;
-    transition: transform 0.4s ease;
+    text-align: left;
+    transition: all 0.3s ease;
 }
 
 .benefitCard:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 20px 40px rgba(0, 40, 85, 0.12);
-    border-color: transparent;
+    border-color: #00A3E0;
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
 }
 
-.benefitCard:hover::before {
-    transform: scaleX(1);
-}
-
-.benefitIcon {
-    font-size: 2.75rem;
-    display: block;
-    margin-bottom: 1.25rem;
-}
-
-.benefitCard h3 {
-    color: #002855;
-    font-size: 1.15rem;
+.benefitHeader {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
     margin-bottom: 0.75rem;
-    font-weight: 700;
 }
 
-.benefitCard p {
+.benefitTitle {
+    font-weight: 700;
+    font-size: 1rem;
+    color: #0f172a;
+    margin: 0;
+}
+
+.benefitDescription {
     color: #64748b;
     font-size: 0.9rem;
     line-height: 1.6;
@@ -280,26 +331,30 @@
 /* Responsive */
 @media (max-width: 768px) {
     .hero {
-        padding: 4rem 0 3rem;
+        padding: 6rem 0 4rem;
     }
 
     .heroTitle {
-        font-size: 1.75rem;
+        font-size: 2rem;
     }
 
-    .vmSection {
+    .bentoGrid {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .visionMissionGrid {
         grid-template-columns: 1fr;
+        border-radius: 20px;
     }
 
-    .focusGrid {
-        grid-template-columns: repeat(2, 1fr);
+    .vmPanel {
+        padding: 2.5rem 2rem;
     }
 
-    .benefitsSection {
-        padding: 3rem 1rem;
-    }
-
-    .benefitsGrid {
-        grid-template-columns: 1fr;
+    .focusSection {
+        margin: 0;
+        padding-left: 1rem;
+        padding-right: 1rem;
     }
 }
