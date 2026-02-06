@@ -1,6 +1,9 @@
+'use client';
+
 import Link from 'next/link';
+import { useEffect, useState } from 'react';
 import styles from './page.module.css';
-import { getHomePage } from '@/lib/sanity';
+import { FadeIn, StaggerContainer, StaggerItem, HeroText } from '@/components/Animations';
 
 // Fallback data if Sanity doesn't have content yet
 const fallbackData = {
@@ -24,8 +27,30 @@ const fallbackData = {
   ctaButtonLink: '/contact',
 };
 
-export default async function Home() {
-  const data = await getHomePage() || fallbackData;
+interface HomeData {
+  heroBadge?: string;
+  heroTitle?: string;
+  heroInstitution?: string;
+  heroDescription?: string;
+  stats?: { number: string; label: string }[];
+  quickLinks?: { icon: string; title: string; description: string; link: string }[];
+  ctaTitle?: string;
+  ctaDescription?: string;
+  ctaButtonText?: string;
+  ctaButtonLink?: string;
+}
+
+export default function Home() {
+  const [data, setData] = useState<HomeData>(fallbackData);
+
+  useEffect(() => {
+    fetch('/api/home')
+      .then(res => res.json())
+      .then(homeData => {
+        if (homeData) setData({ ...fallbackData, ...homeData });
+      })
+      .catch(() => { });
+  }, []);
 
   const {
     heroBadge,
@@ -38,64 +63,82 @@ export default async function Home() {
     ctaDescription,
     ctaButtonText,
     ctaButtonLink,
-  } = { ...fallbackData, ...data };
+  } = data;
 
   return (
     <main className={styles.main}>
       <section className={styles.hero}>
         <div className="container">
           <div className={styles.heroContent}>
-            <span className={styles.badge}>{heroBadge}</span>
-            <h1 className={styles.heroTitle}>{heroTitle}</h1>
-            <p className={styles.heroInstitution}>{heroInstitution}</p>
-            <p className={styles.heroDescription}>{heroDescription}</p>
-            <div className={styles.heroActions}>
-              <Link href="/about" className={styles.btnPrimary}>
-                Explore Our Chapter
-              </Link>
-              <Link href="/events" className={styles.btnSecondary}>
-                View Events
-              </Link>
-            </div>
+            <HeroText delay={0}>
+              <span className={styles.badge}>{heroBadge}</span>
+            </HeroText>
+            <HeroText delay={0.1}>
+              <h1 className={styles.heroTitle}>{heroTitle}</h1>
+            </HeroText>
+            <HeroText delay={0.2}>
+              <p className={styles.heroInstitution}>{heroInstitution}</p>
+            </HeroText>
+            <HeroText delay={0.3}>
+              <p className={styles.heroDescription}>{heroDescription}</p>
+            </HeroText>
+            <HeroText delay={0.4}>
+              <div className={styles.heroActions}>
+                <Link href="/about" className={styles.btnPrimary}>
+                  Explore Our Chapter
+                </Link>
+                <Link href="/events" className={styles.btnSecondary}>
+                  View Events
+                </Link>
+              </div>
+            </HeroText>
           </div>
         </div>
       </section>
 
       <section className={styles.statsSection}>
         <div className="container">
-          <div className={styles.statsGrid}>
-            {(stats || fallbackData.stats).map((stat: { number: string; label: string }, index: number) => (
-              <div key={index} className={styles.statItem}>
-                <span className={styles.statNumber}>{stat.number}</span>
-                <span className={styles.statLabel}>{stat.label}</span>
-              </div>
+          <StaggerContainer className={styles.statsGrid}>
+            {(stats || fallbackData.stats).map((stat, index) => (
+              <StaggerItem key={index}>
+                <div className={styles.statItem}>
+                  <span className={styles.statNumber}>{stat.number}</span>
+                  <span className={styles.statLabel}>{stat.label}</span>
+                </div>
+              </StaggerItem>
             ))}
-          </div>
+          </StaggerContainer>
         </div>
       </section>
 
       <section className={styles.quickLinks}>
         <div className="container">
-          <h2 className={styles.sectionTitle}>Get Involved</h2>
-          <div className={styles.linksGrid}>
-            {(quickLinks || fallbackData.quickLinks).map((item: { icon: string; title: string; description: string; link: string }, index: number) => (
-              <Link key={index} href={item.link} className={styles.linkCard}>
-                <span className={styles.linkIcon}>{item.icon}</span>
-                <h3>{item.title}</h3>
-                <p>{item.description}</p>
-              </Link>
+          <FadeIn>
+            <h2 className={styles.sectionTitle}>Get Involved</h2>
+          </FadeIn>
+          <StaggerContainer className={styles.linksGrid} staggerDelay={0.15}>
+            {(quickLinks || fallbackData.quickLinks).map((item, index) => (
+              <StaggerItem key={index}>
+                <Link href={item.link} className={styles.linkCard}>
+                  <span className={styles.linkIcon}>{item.icon}</span>
+                  <h3>{item.title}</h3>
+                  <p>{item.description}</p>
+                </Link>
+              </StaggerItem>
             ))}
-          </div>
+          </StaggerContainer>
         </div>
       </section>
 
       <section className={styles.ctaSection}>
         <div className="container">
-          <h2>{ctaTitle}</h2>
-          <p>{ctaDescription}</p>
-          <Link href={ctaButtonLink || '/contact'} className={styles.ctaButton}>
-            {ctaButtonText}
-          </Link>
+          <FadeIn>
+            <h2>{ctaTitle}</h2>
+            <p>{ctaDescription}</p>
+            <Link href={ctaButtonLink || '/contact'} className={styles.ctaButton}>
+              {ctaButtonText}
+            </Link>
+          </FadeIn>
         </div>
       </section>
     </main>

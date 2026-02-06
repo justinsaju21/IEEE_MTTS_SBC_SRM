@@ -12,6 +12,7 @@
     "@sanity/client": "^7.14.1",
     "@sanity/image-url": "^2.0.3",
     "@sanity/vision": "^5.8.1",
+    "framer-motion": "^12.33.0",
     "lucide-react": "^0.563.0",
     "next": "16.1.6",
     "next-sanity": "^12.1.0",
