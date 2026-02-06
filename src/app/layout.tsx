@@ -17,8 +17,9 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "IEEE MTT-S Student Branch Chapter | SRM IST",
-  description: "Official website of the IEEE Microwave Theory and Technology Society Student Branch Chapter at SRM Institute of Science and Technology.",
+  title: "IEEE MTT-S Student Branch Chapter | SRM Institute of Science and Technology",
+  description: "Official website of the IEEE Microwave Theory and Technology Society Student Branch Chapter at SRM Institute of Science and Technology. advancing microwave and RF engineering education.",
+  keywords: "IEEE MTT-S, Microwave Engineering, RF Engineering, IEEE Student Chapter, SRM Institute of Science and Technology, Antenna Engineering, Wireless Communication, Engineering Student Society",
 };
 
 export default function RootLayout({

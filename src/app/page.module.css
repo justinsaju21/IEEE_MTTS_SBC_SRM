@@ -2,127 +2,262 @@
   width: 100%;
 }
 
+/* Hero Section */
 .hero {
-  background-color: var(--color-primary);
+  background: linear-gradient(135deg, var(--color-primary) 0%, #001a3a 100%);
   color: white;
   padding: 6rem 0;
   text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  opacity: 0.5;
+}
+
+.heroContent {
+  position: relative;
+  z-index: 1;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.badge {
+  display: inline-block;
+  background: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  padding: 0.5rem 1.25rem;
+  border-radius: 50px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  margin-bottom: 1.5rem;
+  backdrop-filter: blur(10px);
 }
 
 .heroTitle {
   color: white;
-  font-size: 2.5rem;
-  margin-bottom: 1.5rem;
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
+  font-size: 3rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  line-height: 1.1;
 }
 
-.heroSubtitle {
-  display: block;
+.heroInstitution {
   font-size: 1.25rem;
-  font-weight: 400;
-  opacity: 0.9;
-  margin-top: 0.5rem;
+  color: var(--color-secondary);
+  font-weight: 500;
+  margin-bottom: 1.5rem;
 }
 
 .heroDescription {
-  font-size: 1.125rem;
-  max-width: 700px;
-  margin: 0 auto 2rem;
-  opacity: 0.85;
+  font-size: 1.1rem;
+  max-width: 600px;
+  margin: 0 auto 2.5rem;
+  opacity: 0.9;
+  line-height: 1.6;
 }
 
 .heroActions {
   display: flex;
   gap: 1rem;
   justify-content: center;
+  flex-wrap: wrap;
 }
 
-/* Override btn-secondary for dark background use */
-.heroActions .btn-secondary {
+.btnPrimary {
+  display: inline-block;
+  padding: 0.875rem 2rem;
+  background-color: var(--color-secondary);
+  color: white;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 1rem;
+  transition: all 0.2s ease;
+  text-decoration: none;
+}
+
+.btnPrimary:hover {
+  background-color: #0090c7;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 163, 224, 0.3);
+  color: white;
+}
+
+.btnSecondary {
+  display: inline-block;
+  padding: 0.875rem 2rem;
+  background-color: transparent;
+  color: white;
+  border: 2px solid rgba(255, 255, 255, 0.5);
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 1rem;
+  transition: all 0.2s ease;
+  text-decoration: none;
+}
+
+.btnSecondary:hover {
+  background-color: rgba(255, 255, 255, 0.1);
   border-color: white;
   color: white;
 }
 
-.heroActions .btn-secondary:hover {
-  background-color: white;
+/* Stats Section */
+.statsSection {
+  background: white;
+  padding: 3rem 0;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.statsGrid {
+  display: flex;
+  justify-content: center;
+  gap: 4rem;
+  flex-wrap: wrap;
+}
+
+.statItem {
+  text-align: center;
+}
+
+.statNumber {
+  display: block;
+  font-size: 2.5rem;
+  font-weight: 700;
   color: var(--color-primary);
+  font-family: var(--font-primary);
+}
+
+.statLabel {
+  font-size: 0.9rem;
+  color: var(--color-text-light);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* Links Section */
+.linksSection {
+  padding: 5rem 0;
+  background: #f8fafc;
 }
 
 .sectionTitle {
   text-align: center;
-  margin-bottom: 2rem;
-  position: relative;
-  display: inline-block;
-  left: 50%;
-  transform: translateX(-50%);
-}
-
-.sectionTitle::after {
-  content: '';
-  display: block;
-  width: 60px;
-  height: 3px;
-  background-color: var(--color-secondary);
-  margin: 0.5rem auto 0;
-}
-
-.highlightCard {
-  border: 1px solid var(--color-border);
-  border-left: 5px solid var(--color-secondary);
-  padding: 2rem;
-  border-radius: 4px;
-}
-
-.textLink {
-  color: var(--color-secondary);
-  font-weight: 600;
-  margin-top: 1rem;
-  display: inline-block;
-}
-
-.bgLight {
-  background-color: #f8f9fa;
+  font-size: 2rem;
+  margin-bottom: 3rem;
+  color: var(--color-primary);
 }
 
 .grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 2rem;
 }
 
 .card {
   background: white;
   padding: 2rem;
+  border-radius: 12px;
   border: 1px solid var(--color-border);
-  border-radius: 4px;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-  display: block;
+  transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  text-decoration: none;
+  position: relative;
 }
 
 .card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 20px 40px rgba(0, 40, 85, 0.1);
   border-color: var(--color-secondary);
 }
 
+.cardIcon {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+}
+
 .card h3 {
-  margin-bottom: 0.5rem;
   color: var(--color-primary);
+  font-size: 1.25rem;
+  margin-bottom: 0.75rem;
 }
 
 .card p {
   color: var(--color-text-light);
   font-size: 0.95rem;
+  line-height: 1.5;
+  flex-grow: 1;
 }
 
+.cardArrow {
+  color: var(--color-secondary);
+  font-size: 1.5rem;
+  margin-top: 1rem;
+  transition: transform 0.2s ease;
+}
+
+.card:hover .cardArrow {
+  transform: translateX(5px);
+}
+
+/* CTA Section */
+.ctaSection {
+  background: var(--color-primary);
+  padding: 5rem 0;
+}
+
+.ctaContent {
+  text-align: center;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.ctaContent h2 {
+  color: white;
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+.ctaContent p {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 1.1rem;
+  margin-bottom: 2rem;
+  line-height: 1.6;
+}
+
+/* Responsive */
 @media (max-width: 768px) {
   .heroTitle {
-    font-size: 1.75rem;
+    font-size: 2rem;
   }
 
-  .heroSubtitle {
+  .heroInstitution {
     font-size: 1rem;
+  }
+
+  .heroDescription {
+    font-size: 1rem;
+  }
+
+  .statsGrid {
+    gap: 2rem;
+  }
+
+  .statNumber {
+    font-size: 2rem;
+  }
+
+  .ctaContent h2 {
+    font-size: 1.5rem;
   }
 }

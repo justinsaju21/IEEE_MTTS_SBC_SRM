@@ -1,0 +1,188 @@
+.page {
+    width: 100%;
+}
+
+.hero {
+    background: linear-gradient(135deg, var(--color-primary) 0%, #001a3a 100%);
+    color: white;
+    padding: 4rem 0;
+    text-align: center;
+}
+
+.heroTitle {
+    color: white;
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.heroSubtitle {
+    font-size: 1.1rem;
+    opacity: 0.9;
+}
+
+.contentSection {
+    margin-bottom: 3rem;
+}
+
+.sectionTitle {
+    font-size: 1.5rem;
+    color: var(--color-primary);
+    border-left: 4px solid var(--color-secondary);
+    padding-left: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.contentSection p {
+    margin-bottom: 1rem;
+    line-height: 1.7;
+    color: var(--color-text);
+}
+
+/* Parent Organizations */
+.orgList {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.orgItem {
+    background: #f8fafc;
+    padding: 1rem 1.25rem;
+    border-radius: 8px;
+    border-left: 3px solid var(--color-secondary);
+    font-weight: 500;
+}
+
+/* Vision & Mission */
+.vmSection {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    margin-bottom: 3rem;
+}
+
+.vmCard {
+    background: linear-gradient(135deg, var(--color-primary) 0%, #003366 100%);
+    color: white;
+    padding: 2rem;
+    border-radius: 12px;
+}
+
+.vmCard h3 {
+    color: var(--color-secondary);
+    margin-bottom: 1rem;
+    font-size: 1.25rem;
+}
+
+.vmCard p {
+    color: rgba(255, 255, 255, 0.9);
+    line-height: 1.6;
+}
+
+/* Objectives */
+.objectivesList {
+    list-style: none;
+    padding: 0;
+}
+
+.objectivesList li {
+    position: relative;
+    padding-left: 2rem;
+    margin-bottom: 0.875rem;
+    line-height: 1.5;
+}
+
+.objectivesList li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: var(--color-secondary);
+    font-weight: 600;
+}
+
+/* Focus Areas */
+.focusGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 1rem;
+}
+
+.focusItem {
+    background: #f8fafc;
+    padding: 1rem 1.25rem;
+    border-radius: 8px;
+    text-align: center;
+    border: 1px solid var(--color-border);
+    font-weight: 500;
+    font-size: 0.9rem;
+    transition: all 0.2s ease;
+}
+
+.focusItem:hover {
+    border-color: var(--color-secondary);
+    background: white;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 40, 85, 0.08);
+}
+
+/* Member Benefits */
+.benefitsSection {
+    background: #f8fafc;
+    margin: 0 -1.5rem;
+    padding: 3rem 1.5rem;
+    border-radius: 0;
+}
+
+.benefitsGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    margin-top: 2rem;
+}
+
+.benefitCard {
+    background: white;
+    padding: 2rem;
+    border-radius: 12px;
+    border: 1px solid var(--color-border);
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+.benefitCard:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 30px rgba(0, 40, 85, 0.1);
+    border-color: var(--color-secondary);
+}
+
+.benefitIcon {
+    font-size: 2.5rem;
+    display: block;
+    margin-bottom: 1rem;
+}
+
+.benefitCard h3 {
+    color: var(--color-primary);
+    font-size: 1.1rem;
+    margin-bottom: 0.5rem;
+}
+
+.benefitCard p {
+    color: var(--color-text-light);
+    font-size: 0.9rem;
+    line-height: 1.5;
+}
+
+@media (max-width: 768px) {
+    .heroTitle {
+        font-size: 2rem;
+    }
+
+    .vmSection {
+        grid-template-columns: 1fr;
+    }
+
+    .focusGrid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}

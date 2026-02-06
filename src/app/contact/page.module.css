@@ -1,6 +1,6 @@
 .header {
     text-align: center;
-    margin-bottom: 3rem;
+    margin-bottom: 4rem;
 }
 
 .title {
@@ -10,51 +10,68 @@
 
 .subtitle {
     color: var(--color-text-light);
+    font-size: 1.1rem;
 }
 
-.contactContainer {
+.contactGrid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: 2rem;
-    max-width: 1000px;
-    margin: 0 auto;
+    max-width: 900px;
+    margin: 0 auto 4rem;
 }
 
 .infoCard {
     background: white;
     border: 1px solid var(--color-border);
-    padding: 2rem;
-    border-radius: 8px;
+    padding: 2.5rem 2rem;
+    border-radius: 16px;
     text-align: center;
-    transition: box-shadow 0.2s ease;
+    transition: all 0.3s ease;
 }
 
 .infoCard:hover {
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+    transform: translateY(-5px);
+    box-shadow: 0 20px 40px rgba(0, 40, 85, 0.1);
     border-color: var(--color-secondary);
+}
+
+.iconWrapper {
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(135deg, var(--color-primary) 0%, #003366 100%);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1.5rem;
+}
+
+.icon {
+    font-size: 1.5rem;
 }
 
 .infoCard h2 {
     font-size: 1.25rem;
-    margin-bottom: 1rem;
+    margin-bottom: 0.75rem;
     color: var(--color-primary);
 }
 
 .infoCard p {
     color: var(--color-text-light);
-    margin-bottom: 1rem;
     font-size: 0.95rem;
+    margin-bottom: 1rem;
 }
 
-.emailLink,
-.socialLink {
+.link {
     color: var(--color-secondary);
     font-weight: 600;
-    font-size: 1.1rem;
+    font-size: 1.05rem;
+    text-decoration: none;
+    transition: color 0.2s ease;
 }
 
-.emailLink:hover,
-.socialLink:hover {
+.link:hover {
     text-decoration: underline;
 }
 
@@ -62,4 +79,57 @@
     font-style: normal;
     color: var(--color-text);
     line-height: 1.6;
+    font-size: 0.95rem;
+}
+
+.ctaBlock {
+    background: linear-gradient(135deg, var(--color-primary) 0%, #001a3a 100%);
+    border-radius: 16px;
+    padding: 3rem;
+    text-align: center;
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+.ctaBlock h3 {
+    color: white;
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.ctaBlock p {
+    color: rgba(255, 255, 255, 0.85);
+    margin-bottom: 2rem;
+    line-height: 1.6;
+}
+
+.ctaButton {
+    display: inline-block;
+    padding: 0.875rem 2rem;
+    background-color: var(--color-secondary);
+    color: white;
+    border-radius: 8px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.2s ease;
+}
+
+.ctaButton:hover {
+    background-color: #0090c7;
+    transform: translateY(-2px);
+    color: white;
+}
+
+@media (max-width: 768px) {
+    .title {
+        font-size: 2rem;
+    }
+
+    .contactGrid {
+        grid-template-columns: 1fr;
+    }
+
+    .ctaBlock {
+        padding: 2rem;
+    }
 }

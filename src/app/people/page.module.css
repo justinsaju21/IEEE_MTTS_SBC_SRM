@@ -1,6 +1,6 @@
 .header {
     text-align: center;
-    margin-bottom: 3rem;
+    margin-bottom: 4rem;
 }
 
 .title {
@@ -10,24 +10,34 @@
 
 .subtitle {
     color: var(--color-text-light);
+    font-size: 1.1rem;
 }
 
 .group {
-    margin-bottom: 3rem;
+    margin-bottom: 4rem;
 }
 
 .groupTitle {
     text-align: center;
-    margin-bottom: 2rem;
+    margin-bottom: 2.5rem;
     font-size: 1.5rem;
     color: var(--color-primary);
-    border-bottom: 1px solid var(--color-border);
-    padding-bottom: 1rem;
+    position: relative;
+}
+
+.groupTitle::after {
+    content: '';
+    display: block;
+    width: 60px;
+    height: 3px;
+    background: var(--color-secondary);
+    margin: 0.75rem auto 0;
+    border-radius: 2px;
 }
 
 .grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
     gap: 2rem;
     justify-items: center;
 }
@@ -35,46 +45,86 @@
 .card {
     background: white;
     border: 1px solid var(--color-border);
-    border-radius: 8px;
-    padding: 2rem;
+    border-radius: 16px;
+    padding: 2.5rem 2rem;
     text-align: center;
     width: 100%;
-    max-width: 300px;
-    transition: box-shadow 0.2s ease;
+    max-width: 380px;
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .card:hover {
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+    transform: translateY(-5px);
+    box-shadow: 0 20px 40px rgba(0, 40, 85, 0.1);
     border-color: var(--color-secondary);
 }
 
 .avatarPlaceholder {
     width: 100px;
     height: 100px;
-    background-color: #e0e0e0;
+    background: linear-gradient(135deg, var(--color-primary) 0%, #003366 100%);
     border-radius: 50%;
-    margin: 0 auto 1.5rem;
+    margin-bottom: 1.5rem;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 2.5rem;
+    font-size: 1.75rem;
     color: white;
     font-weight: 700;
-    background-color: var(--color-primary);
+    font-family: var(--font-primary);
+    letter-spacing: 1px;
 }
 
 .name {
     font-size: 1.25rem;
     margin-bottom: 0.5rem;
+    color: var(--color-text);
 }
 
 .role {
     color: var(--color-secondary);
     font-weight: 600;
     margin-bottom: 0.5rem;
+    font-size: 0.9rem;
 }
 
 .dept {
     color: var(--color-text-light);
+    font-size: 0.85rem;
+    font-style: italic;
+    margin-bottom: 1.25rem;
+}
+
+.bio {
     font-size: 0.9rem;
+    color: var(--color-text);
+    line-height: 1.6;
+    border-top: 1px solid #f0f0f0;
+    padding-top: 1.25rem;
+    text-align: left;
+}
+
+.note {
+    text-align: center;
+    color: var(--color-text-light);
+    font-style: italic;
+    margin-top: 2rem;
+    font-size: 0.95rem;
+}
+
+@media (max-width: 768px) {
+    .title {
+        font-size: 2rem;
+    }
+
+    .grid {
+        grid-template-columns: 1fr;
+    }
+
+    .card {
+        max-width: 100%;
+    }
 }
