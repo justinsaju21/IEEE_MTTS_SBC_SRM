@@ -1,60 +1,61 @@
 import styles from './page.module.css';
 import { getAboutPage } from '@/lib/sanity';
 import { FadeIn, StaggerContainer, StaggerItem } from '@/components/Animations';
-import {
-    Globe, BookOpen, GraduationCap, Handshake, LucideIcon, Target, Lightbulb,
-    Zap, Radio, Wifi, Cpu, Layers
-} from 'lucide-react';
+import { DynamicIcon } from '@/components/DynamicIcon';
+
+interface BentoItem {
+    title: string;
+    description: string;
+    icon: string;
+    variant: 'primary' | 'secondary';
+}
 
 interface AboutPageData {
     heroTitle: string;
     heroSubtitle: string;
-    aboutIEEE: string;
-    aboutMTTS: string;
-    parentOrganizations: string[];
-    aboutChapter: string;
     vision: string;
     mission: string;
-    objectives: string[];
     focusAreas: string[];
     memberBenefits: { icon: string; title: string; description: string }[];
+    bentoItems: BentoItem[];
 }
 
 const fallbackData: AboutPageData = {
     heroTitle: 'About Us',
     heroSubtitle: 'Innovating at the intersection of electromagnetic waves and future technology.',
-    aboutIEEE: 'IEEE is the world\'s largest technical professional organization dedicated to advancing technology for the benefit of humanity.',
-    aboutMTTS: 'The IEEE Microwave Theory and Technology Society (MTT-S) promotes the advancement of microwave theory and its applications, including RF, microwave, millimeter-wave tech, and autonomous systems.',
-    parentOrganizations: ['IEEE', 'IEEE MTT-S', 'IEEE SRM Branch', 'IEEE Madras'],
-    aboutChapter: 'Our Student Branch Chapter at SRM IST is a vibrant community of innovators. We bridge the gap between academic theory and industry reality through hands-on workshops, expert talks, and cutting-edge research projects.',
     vision: 'To be a premier hub of microwave innovation, fostering technical excellence and professional growth.',
     mission: 'Empowering students to master RF & Microwave technologies through research, collaboration, and industry exposure.',
-    objectives: [
-        'Advanced RF/Microwave Learning',
-        'Research & Publications',
-        'Industry & Alumni Interaction',
-        'Hands-on Prototyping',
-        'Leadership Development'
-    ],
     focusAreas: [
         'Microwave Engineering', '5G/6G Networks', 'Antenna Design', 'Radar Systems',
         'Satellite Comms', 'IoT Connectivity', 'Radio Astronomy', 'Bio-Medical RF',
         'Wireless Power', 'Electromagnetics'
     ],
     memberBenefits: [
-        { icon: 'Globe', title: 'Global Network', description: 'Connect with 400,000+ members worldwide.' },
-        { icon: 'BookOpen', title: 'Resources', description: 'Access IEEE Xplore & cutting-edge journals.' },
-        { icon: 'GraduationCap', title: 'Career Growth', description: 'Scholarships, grants, and job portals.' },
-        { icon: 'Handshake', title: 'Community', description: 'Mentorship from industry veterans.' }
+        { icon: 'globe', title: 'Global Network', description: 'Connect with 400,000+ members worldwide.' },
+        { icon: 'book', title: 'Resources', description: 'Access IEEE Xplore & cutting-edge journals.' },
+        { icon: 'graduation', title: 'Career Growth', description: 'Scholarships, grants, and job portals.' },
+        { icon: 'handshake', title: 'Community', description: 'Mentorship from industry veterans.' }
+    ],
+    bentoItems: [
+        {
+            title: 'Our Chapter',
+            description: 'Our Student Branch Chapter at SRM IST is a vibrant community of innovators. We bridge the gap between academic theory and industry reality through hands-on workshops, expert talks, and cutting-edge research projects.',
+            icon: 'cpu',
+            variant: 'primary'
+        },
+        {
+            title: 'IEEE',
+            description: 'IEEE is the world\'s largest technical professional organization dedicated to advancing technology for the benefit of humanity.',
+            icon: 'globe',
+            variant: 'secondary'
+        },
+        {
+            title: 'MTT-S',
+            description: 'The IEEE Microwave Theory and Technology Society (MTT-S) promotes the advancement of microwave theory and its applications, including RF, microwave, millimeter-wave tech, and autonomous systems.',
+            icon: 'radio',
+            variant: 'secondary'
+        }
     ]
-};
-
-const getBenefitIcon = (title: string): LucideIcon => {
-    if (title.includes('Global')) return Globe;
-    if (title.includes('Resources')) return BookOpen;
-    if (title.includes('Career')) return GraduationCap;
-    if (title.includes('Community')) return Handshake;
-    return Globe;
 };
 
 export const metadata = {
@@ -90,35 +91,19 @@ export default async function About() {
                 {/* Bento Grid: Who We Are */}
                 <FadeIn className={styles.bentoGridSection}>
                     <div className={styles.bentoGrid}>
-                        {/* Main Card: Our Chapter */}
-                        <div className={`${styles.bentoCard} ${styles.cardMain}`}>
-                            <div className={styles.cardIcon}>
-                                <Cpu size={32} />
-                            </div>
-                            <h2 className={styles.cardTitle}>Our Chapter</h2>
-                            <p className={styles.cardText}>{content.aboutChapter}</p>
-                        </div>
-
-                        {/* Right Column */}
-                        <div className={styles.sideCol}>
-                            {/* Side Card 1: IEEE */}
-                            <div className={`${styles.bentoCard} ${styles.cardSmall}`}>
+                        {/* Bento Grid: Generated dynamically from list */}
+                        {content.bentoItems?.map((item: BentoItem, index: number) => (
+                            <div
+                                key={index}
+                                className={`${styles.bentoCard} ${item.variant === 'primary' ? styles.cardMain : styles.cardSmall}`}
+                            >
                                 <div className={styles.cardIcon}>
-                                    <Globe size={24} />
+                                    <DynamicIcon name={item.icon} size={item.variant === 'primary' ? 32 : 24} />
                                 </div>
-                                <h3 className={styles.cardTitle}>IEEE</h3>
-                                <p className={styles.cardText}>{content.aboutIEEE}</p>
+                                <h3 className={styles.cardTitle}>{item.title}</h3>
+                                <p className={styles.cardText}>{item.description}</p>
                             </div>
-
-                            {/* Side Card 2: MTT-S */}
-                            <div className={`${styles.bentoCard} ${styles.cardSmall}`}>
-                                <div className={styles.cardIcon}>
-                                    <Radio size={24} />
-                                </div>
-                                <h3 className={styles.cardTitle}>MTT-S</h3>
-                                <p className={styles.cardText}>{content.aboutMTTS}</p>
-                            </div>
-                        </div>
+                        ))}
                     </div>
                 </FadeIn>
 
@@ -126,12 +111,12 @@ export default async function About() {
                 <FadeIn delay={0.2}>
                     <div className={styles.visionMissionGrid}>
                         <div className={`${styles.vmPanel} ${styles.vmDark}`}>
-                            <Lightbulb className={styles.vmWatermark} size={200} strokeWidth={1} />
+                            <DynamicIcon name="lightbulb" className={styles.vmWatermark} size={200} />
                             <h3 className={styles.vmTitle}>Vision</h3>
                             <p className={styles.vmText}>{content.vision}</p>
                         </div>
                         <div className={`${styles.vmPanel} ${styles.vmLight}`}>
-                            <Target className={styles.vmWatermark} size={200} strokeWidth={1} />
+                            <DynamicIcon name="target" className={styles.vmWatermark} size={200} />
                             <h3 className={styles.vmTitle}>Mission</h3>
                             <p className={styles.vmText}>{content.mission}</p>
                         </div>
@@ -158,18 +143,15 @@ export default async function About() {
                         <h2 className={styles.sectionTitle}>Why Join Us?</h2>
                     </FadeIn>
                     <StaggerContainer className={styles.benefitsGrid} staggerDelay={0.1}>
-                        {memberBenefits.map((benefit: { icon: string; title: string; description: string }, index: number) => {
-                            const Icon = getBenefitIcon(benefit.title);
-                            return (
-                                <StaggerItem key={index} className={styles.benefitCard}>
-                                    <div className={styles.benefitHeader}>
-                                        <Icon className="text-[#00A3E0]" size={32} />
-                                        <h3 className={styles.benefitTitle}>{benefit.title}</h3>
-                                    </div>
-                                    <p className={styles.benefitDescription}>{benefit.description}</p>
-                                </StaggerItem>
-                            );
-                        })}
+                        {memberBenefits.map((benefit: { icon: string; title: string; description: string }, index: number) => (
+                            <StaggerItem key={index} className={styles.benefitCard}>
+                                <div className={styles.benefitHeader}>
+                                    <DynamicIcon name={benefit.icon} className="text-[#00A3E0]" size={32} />
+                                    <h3 className={styles.benefitTitle}>{benefit.title}</h3>
+                                </div>
+                                <p className={styles.benefitDescription}>{benefit.description}</p>
+                            </StaggerItem>
+                        ))}
                     </StaggerContainer>
                 </section>
 
