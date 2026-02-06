@@ -91,19 +91,34 @@ export default async function About() {
                 {/* Bento Grid: Who We Are */}
                 <FadeIn className={styles.bentoGridSection}>
                     <div className={styles.bentoGrid}>
-                        {/* Bento Grid: Generated dynamically from list */}
-                        {content.bentoItems?.map((item: BentoItem, index: number) => (
-                            <div
-                                key={index}
-                                className={`${styles.bentoCard} ${item.variant === 'primary' ? styles.cardMain : styles.cardSmall}`}
-                            >
-                                <div className={styles.cardIcon}>
-                                    <DynamicIcon name={item.icon} size={item.variant === 'primary' ? 32 : 24} />
+                        {/* PROPER LAYOUT RESTORED: Main Card Left, Side Cards Right */}
+
+                        {/* 1. Main Column (Primary Item) */}
+                        {(() => {
+                            const primaryItem = content.bentoItems?.find((i: BentoItem) => i.variant === 'primary') || content.bentoItems?.[0];
+                            return primaryItem ? (
+                                <div className={`${styles.bentoCard} ${styles.cardMain}`}>
+                                    <div className={styles.cardIcon}>
+                                        <DynamicIcon name={primaryItem.icon} size={32} />
+                                    </div>
+                                    <h2 className={styles.cardTitle}>{primaryItem.title}</h2>
+                                    <p className={styles.cardText}>{primaryItem.description}</p>
                                 </div>
-                                <h3 className={styles.cardTitle}>{item.title}</h3>
-                                <p className={styles.cardText}>{item.description}</p>
-                            </div>
-                        ))}
+                            ) : null;
+                        })()}
+
+                        {/* 2. Side Column (Secondary Items) */}
+                        <div className={styles.sideCol}>
+                            {content.bentoItems?.filter((i: BentoItem) => i.variant !== 'primary').map((item: BentoItem, index: number) => (
+                                <div key={index} className={`${styles.bentoCard} ${styles.cardSmall}`}>
+                                    <div className={styles.cardIcon}>
+                                        <DynamicIcon name={item.icon} size={24} />
+                                    </div>
+                                    <h3 className={styles.cardTitle}>{item.title}</h3>
+                                    <p className={styles.cardText}>{item.description}</p>
+                                </div>
+                            ))}
+                        </div>
                     </div>
                 </FadeIn>
 
