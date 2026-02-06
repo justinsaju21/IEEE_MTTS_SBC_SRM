@@ -81,7 +81,7 @@ export default async function About() {
                 <section className={styles.contentSection}>
                     <h2 className={styles.sectionTitle}>Parent Organizations</h2>
                     <div className={styles.orgList}>
-                        {content.parentOrganizations.map((org, index) => (
+                        {content.parentOrganizations.map((org: string, index: number) => (
                             <div key={index} className={styles.orgItem}>{org}</div>
                         ))}
                     </div>
@@ -106,7 +106,7 @@ export default async function About() {
                 <section className={styles.contentSection}>
                     <h2 className={styles.sectionTitle}>Core Objectives</h2>
                     <ul className={styles.objectivesList}>
-                        {content.objectives.map((obj, index) => (
+                        {content.objectives.map((obj: string, index: number) => (
                             <li key={index}>{obj}</li>
                         ))}
                     </ul>
@@ -115,7 +115,7 @@ export default async function About() {
                 <section className={styles.contentSection}>
                     <h2 className={styles.sectionTitle}>Key Focus Areas</h2>
                     <div className={styles.focusGrid}>
-                        {content.focusAreas.map((area, index) => (
+                        {content.focusAreas.map((area: string, index: number) => (
                             <div key={index} className={styles.focusItem}>{area}</div>
                         ))}
                     </div>
@@ -124,7 +124,7 @@ export default async function About() {
                 <section className={styles.benefitsSection}>
                     <h2 className={styles.sectionTitle}>Why Join IEEE MTT-S?</h2>
                     <div className={styles.benefitsGrid}>
-                        {content.memberBenefits.map((benefit, index) => (
+                        {content.memberBenefits.map((benefit: { icon: string; title: string; description: string }, index: number) => (
                             <div key={index} className={styles.benefitCard}>
                                 <span className={styles.benefitIcon}>{benefit.icon}</span>
                                 <h3>{benefit.title}</h3>
