@@ -1,78 +1,122 @@
 import styles from './page.module.css';
+import { getAllEvents, urlFor } from '@/lib/sanity';
+import Image from 'next/image';
 
-const events = [
+interface Event {
+    _id: string;
+    title: string;
+    date: string;
+    venue: string;
+    description: string;
+    coverImage?: { asset: { _ref: string } };
+    status: 'upcoming' | 'past';
+    registrationLink?: string;
+}
+
+// Fallback data
+const fallbackEvents: Event[] = [
     {
-        id: 1,
+        _id: '1',
         title: "Inauguration of IEEE MTT-S SBC",
-        date: "January 27, 2026",
+        date: "2026-01-27",
         venue: "MBA Seminar Hall, SRM IST",
-        description: "The official inauguration ceremony of the IEEE Microwave Theory and Technology Society Student Branch Chapter at SRM Institute of Science and Technology, graced by distinguished guests from IEEE Madras Section.",
-        status: "Past"
+        description: "The official inauguration ceremony of the IEEE Microwave Theory and Technology Society Student Branch Chapter at SRM Institute of Science and Technology.",
+        status: "past"
     }
 ];
+
+function formatDate(dateString: string): string {
+    return new Date(dateString).toLocaleDateString('en-US', {
+        month: 'long',
+        day: 'numeric',
+        year: 'numeric'
+    });
+}
 
 export const metadata = {
     title: "Events | IEEE MTT-S SBC SRM",
 };
 
-export default function Events() {
-    const upcoming = events.filter(e => e.status === "Upcoming");
-    const past = events.filter(e => e.status === "Past");
+export default async function Events() {
+    const events: Event[] = await getAllEvents() || fallbackEvents;
+
+    const upcomingEvents = events.filter(e => e.status === 'upcoming');
+    const pastEvents = events.filter(e => e.status === 'past');
 
     return (
         <div className="container section">
             <div className={styles.header}>
-                <h1 className={styles.title}>Events & Activities</h1>
-                <p className={styles.subtitle}>Workshops, Distinguished Lectures, Student Competitions, and Outreach Initiatives.</p>
+                <h1 className={styles.title}>Events</h1>
+                <p className={styles.subtitle}>Workshops, seminars, and technical activities organized by our chapter.</p>
             </div>
 
-            <section className={styles.sectionBlock}>
+            <section className={styles.eventSection}>
                 <h2 className={styles.sectionTitle}>Upcoming Events</h2>
-                {upcoming.length > 0 ? (
-                    <div className={styles.list}>
-                        {upcoming.map(event => (
-                            <div key={event.id} className={styles.eventCard}>
-                                <div className={styles.dateBox}>
-                                    <span className={styles.dateDay}>{event.date.split(' ')[1]?.replace(',', '')}</span>
-                                    <span className={styles.dateYear}>{event.date.split(' ')[0]}</span>
-                                </div>
+                {upcomingEvents.length > 0 ? (
+                    <div className={styles.eventGrid}>
+                        {upcomingEvents.map((event) => (
+                            <article key={event._id} className={styles.eventCard}>
+                                {event.coverImage && (
+                                    <div className={styles.eventImage}>
+                                        <Image
+                                            src={urlFor(event.coverImage).width(400).height(200).url()}
+                                            alt={event.title}
+                                            width={400}
+                                            height={200}
+                                        />
+                                    </div>
+                                )}
                                 <div className={styles.eventContent}>
+                                    <span className={styles.eventDate}>{formatDate(event.date)}</span>
                                     <h3 className={styles.eventTitle}>{event.title}</h3>
-                                    <p className={styles.eventMeta}>📍 {event.venue}</p>
-                                    <p className={styles.eventDesc}>{event.description}</p>
+                                    <p className={styles.eventVenue}>📍 {event.venue}</p>
+                                    <p className={styles.eventDescription}>{event.description}</p>
+                                    {event.registrationLink && (
+                                        <a href={event.registrationLink} target="_blank" rel="noopener noreferrer" className={styles.registerBtn}>
+                                            Register Now
+                                        </a>
+                                    )}
                                 </div>
-                            </div>
+                            </article>
                         ))}
                     </div>
                 ) : (
                     <div className={styles.emptyState}>
-                        <p>No upcoming events scheduled at the moment.</p>
-                        <p className={styles.emptyNote}>Stay tuned for announcements!</p>
+                        <p>No upcoming events at the moment. Stay tuned!</p>
                     </div>
                 )}
             </section>
 
-            <section className={styles.sectionBlock}>
+            <section className={styles.eventSection}>
                 <h2 className={styles.sectionTitle}>Past Events</h2>
-                {past.length > 0 ? (
-                    <div className={styles.grid}>
-                        {past.map(event => (
-                            <div key={event.id} className={styles.pastEventCard}>
-                                <span className={styles.pastDate}>{event.date}</span>
-                                <h3 className={styles.pastTitle}>{event.title}</h3>
-                                <p className={styles.pastVenue}>📍 {event.venue}</p>
-                                <p className={styles.pastDesc}>{event.description}</p>
-                            </div>
+                {pastEvents.length > 0 ? (
+                    <div className={styles.eventGrid}>
+                        {pastEvents.map((event) => (
+                            <article key={event._id} className={`${styles.eventCard} ${styles.pastEvent}`}>
+                                {event.coverImage && (
+                                    <div className={styles.eventImage}>
+                                        <Image
+                                            src={urlFor(event.coverImage).width(400).height(200).url()}
+                                            alt={event.title}
+                                            width={400}
+                                            height={200}
+                                        />
+                                    </div>
+                                )}
+                                <div className={styles.eventContent}>
+                                    <span className={styles.eventDate}>{formatDate(event.date)}</span>
+                                    <h3 className={styles.eventTitle}>{event.title}</h3>
+                                    <p className={styles.eventVenue}>📍 {event.venue}</p>
+                                    <p className={styles.eventDescription}>{event.description}</p>
+                                </div>
+                            </article>
                         ))}
                     </div>
                 ) : (
-                    <p>No past events to display.</p>
+                    <div className={styles.emptyState}>
+                        <p>No past events yet.</p>
+                    </div>
                 )}
-            </section>
-
-            <section className={styles.infoBlock}>
-                <h3>Want to add or update events?</h3>
-                <p>Event management will be available through the Sanity CMS dashboard (coming soon).</p>
             </section>
         </div>
     );

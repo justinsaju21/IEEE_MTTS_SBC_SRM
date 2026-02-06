@@ -1,25 +1,56 @@
 import Link from 'next/link';
 import styles from './page.module.css';
+import { getHomePage } from '@/lib/sanity';
 
-export default function Home() {
+// Fallback data if Sanity doesn't have content yet
+const fallbackData = {
+  heroBadge: 'IEEE MTT-S Student Branch Chapter',
+  heroTitle: 'Microwave Theory and Technology Society',
+  heroInstitution: 'SRM Institute of Science and Technology',
+  heroDescription: 'Empowering students in microwave engineering, RF systems, and wireless communications through research, workshops, and industry engagement.',
+  stats: [
+    { number: '10+', label: 'Focus Areas' },
+    { number: 'IEEE', label: 'Global Network' },
+    { number: 'MTT-S', label: 'Technical Society' },
+  ],
+  quickLinks: [
+    { icon: '📡', title: 'About MTT-S', description: 'Learn about IEEE MTT-S and our chapter', link: '/about' },
+    { icon: '📅', title: 'Events', description: 'Upcoming workshops and technical talks', link: '/events' },
+    { icon: '👥', title: 'Our Team', description: 'Meet the office bearers', link: '/people' },
+  ],
+  ctaTitle: 'Ready to Join?',
+  ctaDescription: 'Become a part of the IEEE MTT-S community and unlock global opportunities in microwave engineering.',
+  ctaButtonText: 'Get Started',
+  ctaButtonLink: '/contact',
+};
+
+export default async function Home() {
+  const data = await getHomePage() || fallbackData;
+
+  const {
+    heroBadge,
+    heroTitle,
+    heroInstitution,
+    heroDescription,
+    stats,
+    quickLinks,
+    ctaTitle,
+    ctaDescription,
+    ctaButtonText,
+    ctaButtonLink,
+  } = { ...fallbackData, ...data };
+
   return (
-    <div className={styles.page}>
-      {/* Hero Section */}
+    <main className={styles.main}>
       <section className={styles.hero}>
         <div className="container">
           <div className={styles.heroContent}>
-            <span className={styles.badge}>IEEE MTT-S Student Branch Chapter</span>
-            <h1 className={styles.heroTitle}>
-              Microwave Theory and Technology Society
-            </h1>
-            <p className={styles.heroInstitution}>
-              SRM Institute of Science and Technology
-            </p>
-            <p className={styles.heroDescription}>
-              Empowering students in microwave engineering, RF systems, and wireless communications through research, workshops, and industry engagement.
-            </p>
+            <span className={styles.badge}>{heroBadge}</span>
+            <h1 className={styles.heroTitle}>{heroTitle}</h1>
+            <p className={styles.heroInstitution}>{heroInstitution}</p>
+            <p className={styles.heroDescription}>{heroDescription}</p>
             <div className={styles.heroActions}>
-              <Link href="/about/chapter" className={styles.btnPrimary}>
+              <Link href="/about" className={styles.btnPrimary}>
                 Explore Our Chapter
               </Link>
               <Link href="/events" className={styles.btnSecondary}>
@@ -30,65 +61,43 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Stats Section */}
       <section className={styles.statsSection}>
         <div className="container">
           <div className={styles.statsGrid}>
-            <div className={styles.statItem}>
-              <span className={styles.statNumber}>10+</span>
-              <span className={styles.statLabel}>Focus Areas</span>
-            </div>
-            <div className={styles.statItem}>
-              <span className={styles.statNumber}>IEEE</span>
-              <span className={styles.statLabel}>Global Network</span>
-            </div>
-            <div className={styles.statItem}>
-              <span className={styles.statNumber}>MTT-S</span>
-              <span className={styles.statLabel}>Technical Society</span>
-            </div>
+            {(stats || fallbackData.stats).map((stat: { number: string; label: string }, index: number) => (
+              <div key={index} className={styles.statItem}>
+                <span className={styles.statNumber}>{stat.number}</span>
+                <span className={styles.statLabel}>{stat.label}</span>
+              </div>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* Quick Links Section */}
-      <section className={styles.linksSection}>
+      <section className={styles.quickLinks}>
         <div className="container">
           <h2 className={styles.sectionTitle}>Get Involved</h2>
-          <div className={styles.grid}>
-            <Link href="/events" className={styles.card}>
-              <div className={styles.cardIcon}>📅</div>
-              <h3>Events & Activities</h3>
-              <p>Workshops, Guest Lectures, and Technical Sessions.</p>
-              <span className={styles.cardArrow}>→</span>
-            </Link>
-            <Link href="/people" className={styles.card}>
-              <div className={styles.cardIcon}>👥</div>
-              <h3>Office Bearers</h3>
-              <p>Meet our Faculty Advisors and Executive Committee.</p>
-              <span className={styles.cardArrow}>→</span>
-            </Link>
-            <Link href="/about/chapter" className={styles.card}>
-              <div className={styles.cardIcon}>🎯</div>
-              <h3>Our Mission</h3>
-              <p>Learn about our vision, objectives, and focus areas.</p>
-              <span className={styles.cardArrow}>→</span>
-            </Link>
+          <div className={styles.linksGrid}>
+            {(quickLinks || fallbackData.quickLinks).map((item: { icon: string; title: string; description: string; link: string }, index: number) => (
+              <Link key={index} href={item.link} className={styles.linkCard}>
+                <span className={styles.linkIcon}>{item.icon}</span>
+                <h3>{item.title}</h3>
+                <p>{item.description}</p>
+              </Link>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* CTA Section */}
       <section className={styles.ctaSection}>
         <div className="container">
-          <div className={styles.ctaContent}>
-            <h2>Ready to Join the IEEE MTT-S Community?</h2>
-            <p>Connect with like-minded students, participate in cutting-edge research, and build your professional network.</p>
-            <Link href="/contact" className={styles.btnPrimary}>
-              Get in Touch
-            </Link>
-          </div>
+          <h2>{ctaTitle}</h2>
+          <p>{ctaDescription}</p>
+          <Link href={ctaButtonLink || '/contact'} className={styles.ctaButton}>
+            {ctaButtonText}
+          </Link>
         </div>
       </section>
-    </div>
+    </main>
   );
 }
